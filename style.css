@@ -1,14 +1,45 @@
-table { border-collapse: collapse; }
+table {
+    border-collapse: collapse;
+    table-layout: fixed;    /* Fixed layout to ensure cells do not resize */
+    width: 400px;           /* Set a fixed width for the table */
+    height: 400px;          /* Set a fixed height for the table */
+}
+
 
 td {
+    width: 50px;            /* Fixed width for each cell */
+    height: 50px;           /* Fixed height for each cell */
+    text-align: center;
+    border: 1px solid black;
+    cursor: pointer;
+    position: relative;     /* Ensures the image and outline are positioned correctly */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    overflow: hidden;       /* Prevent content overflow */
+}
+
+.white {
+    background-color: #ffffff;
+}
+
+.grey {
+    background-color: #d3d3d3;
+}
+
+.piece {
+    width: 100%;        /* Make the image fill the cell */
+    height: 100%;       /* Make the image fill the cell */
+    object-fit: contain; /* Ensure the image fits within the cell without distortion */
+    pointer-events: none; /* Prevent the image from intercepting click events */
+}
+
+.selected {
+    outline: 3px solid red;
+}
+
+.label {
     width: 50px;
     height: 50px;
     text-align: center;
-    font-size: 32px;
-    border: 1px solid black;
-    content: "x";
+    font-weight: bold;
+    background-color: #f0f0f0;
 }
-
-.white { background-color: #f0d9b5; }
-
-.black { background-color: #b58863; }
