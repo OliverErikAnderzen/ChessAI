@@ -66,34 +66,96 @@ function movePiece(fromCell, toCell, row, col) {
 
 function isValidMove(fromRow, fromCol, toRow, toCol) {
     const piece = board[fromRow][fromCol];
+    const targetPiece = board[toRow][toCol];
+
     if (!piece) return false;
+
+    // Prevent capturing own pieces
+    if (targetPiece && piece.startsWith(targetPiece.split('_')[0])) {
+        return false;
+    }
 
     const deltaRow = toRow - fromRow;
     const deltaCol = toCol - fromCol;
 
+    // Movement logic for each piece
     switch (piece) {
         case 'white_pawn':
-            return deltaRow === -1 && deltaCol === 0 && !board[toRow][toCol];
+            return isValidPawnMove(fromRow, fromCol, toRow, toCol, 'white');
         case 'black_pawn':
-            return deltaRow === 1 && deltaCol === 0 && !board[toRow][toCol];
+            return isValidPawnMove(fromRow, fromCol, toRow, toCol, 'black');
         case 'white_rook':
         case 'black_rook':
-            return deltaRow === 0 || deltaCol === 0;
+            return isValidRookMove(fromRow, fromCol, toRow, toCol);
         case 'white_knight':
         case 'black_knight':
             return (Math.abs(deltaRow) === 2 && Math.abs(deltaCol) === 1) || (Math.abs(deltaRow) === 1 && Math.abs(deltaCol) === 2);
         case 'white_bishop':
         case 'black_bishop':
-            return Math.abs(deltaRow) === Math.abs(deltaCol);
+            return isValidBishopMove(fromRow, fromCol, toRow, toCol);
         case 'white_queen':
         case 'black_queen':
-            return deltaRow === 0 || deltaCol === 0 || Math.abs(deltaRow) === Math.abs(deltaCol);
+            return isValidRookMove(fromRow, fromCol, toRow, toCol) || isValidBishopMove(fromRow, fromCol, toRow, toCol);
         case 'white_king':
         case 'black_king':
             return Math.abs(deltaRow) <= 1 && Math.abs(deltaCol) <= 1;
         default:
             return false;
     }
+}
+
+
+function isValidPawnMove(fromRow, fromCol, toRow, toCol, color) {
+    const direction = color === 'white' ? -1 : 1;
+    const startRow = color === 'white' ? 6 : 1;
+
+    if (fromCol === toCol && !board[toRow][toCol]) {
+        if (toRow - fromRow === direction) return true;
+        if (fromRow === startRow && toRow - fromRow === 2 * direction) return true;
+    }
+
+    // Capturing diagonally
+    if (Math.abs(fromCol - toCol) === 1 && toRow - fromRow === direction && board[toRow][toCol]) {
+        return true;
+    }
+
+    return false;
+}
+
+function isValidRookMove(fromRow, fromCol, toRow, toCol) {
+    if (fromRow !== toRow && fromCol !== toCol) return false;
+
+    const rowStep = fromRow === toRow ? 0 : (toRow > fromRow ? 1 : -1);
+    const colStep = fromCol === toCol ? 0 : (toCol > fromCol ? 1 : -1);
+
+    let currentRow = fromRow + rowStep;
+    let currentCol = fromCol + colStep;
+
+    while (currentRow !== toRow || currentCol !== toCol) {
+        if (board[currentRow][currentCol]) return false;
+        currentRow += rowStep;
+        currentCol += colStep;
+    }
+
+    return true;
+}
+
+function isValidBishopMove(fromRow, fromCol, toRow, toCol) {
+    if (Math.abs(toRow - fromRow) !== Math.abs(toCol - fromCol)) return false;
+
+    const rowStep = toRow > fromRow ? 1 : -1;
+    const colStep = toCol > fromCol ? 1 : -1;
+
+    let currentRow = fromRow + rowStep;
+    let currentCol = fromCol + colStep;
+
+    while (currentRow !== toRow || currentCol !== toCol) {
+        if (board[currentRow][currentCol]) return false;
+        currentRow += rowStep;
+        currentCol += colStep;
+    }
+
+    return true;
 }
 
 createBoard();
