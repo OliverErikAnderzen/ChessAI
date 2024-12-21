@@ -25,10 +25,14 @@ td {
 }
 
 .piece {
-    width: 100%;        /* Make the image fill the cell */
-    height: 100%;       /* Make the image fill the cell */
-    object-fit: contain; /* Ensure the image fits within the cell without distortion */
-    pointer-events: none; /* Prevent the image from intercepting click events */
+    display: block;         /* Removes default inline spacing around images */
+    width: 100%;            /* Image fills the cell */
+    height: 100%;           /* Image fills the cell */
+    object-fit: contain;    /* Scales image proportionally to fit within the cell */
+    pointer-events: none;   /* Prevents image from intercepting clicks */
+    margin: 0;              /* Ensures no extra space around the image */
+    padding: 0;             /* Ensures no extra space inside the image */
+    border: none;           /* Removes default image border, if any */
 }
 
 .selected {
