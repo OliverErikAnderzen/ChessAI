@@ -53,7 +53,9 @@ function handleClick(cell) {
         const fromCol = parseInt(selectedCell.dataset.col);
         if (isValidMove(fromRow, fromCol, row, col)) {
             movePiece(selectedCell, cell, row, col);
-            switchTurn(); // Switch turn after a valid move
+            switchTurn();
+        } else if (isKingInCheck(currentTurn)) {
+            alert('Invalid move: King cannot be left in check.');
         }
         selectedCell.classList.remove('selected');
         selectedCell = null;
@@ -113,6 +115,11 @@ function movePiece(fromCell, toCell, row, col) {
         }
     }
 
+    if (isKingInCheck(currentTurn)) {
+        alert(`${currentTurn.charAt(0).toUpperCase() + currentTurn.slice(1)} king is in check!`);
+    }
+
+
 }
 
 function handleCastling(fromRow, fromCol, toCol) {
@@ -131,12 +138,75 @@ function handleCastling(fromRow, fromCol, toCol) {
     }
 }
 
-function isValidMove(fromRow, fromCol, toRow, toCol) {
+function isKingInCheck(color) {
+    // Find the king's position
+    let kingPosition = null;
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            const piece = board[i][j];
+            if (piece && piece.type === 'king' && piece.color === color) {
+                kingPosition = { row: i, col: j };
+                break;
+            }
+        }
+    }
+
+    if (!kingPosition) {
+        console.error(`${color} king not found!`);
+        return false;
+    }
+
+    // Check if the king's position is under attack
+    return isSquareUnderAttack(kingPosition.row, kingPosition.col, color);
+}
+
+function isSquareUnderAttack(row, col, defenderColor) {
+    const attackerColor = defenderColor === 'white' ? 'black' : 'white';
+
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            const piece = board[i][j];
+            if (piece && piece.color === attackerColor) {
+                if (isValidMove(i, j, row, col, true)) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+function isValidMove(fromRow, fromCol, toRow, toCol, skipCheckValidation = false) {
     const piece = board[fromRow][fromCol];
     const targetPiece = board[toRow][toCol];
 
     if (!piece) return false;
     if (targetPiece && piece.color === targetPiece.color) return false;
+
+    // if (!valid) return false;
+
+    // Prevent moves that expose the king to check
+    if (!skipCheckValidation) {
+        const originalFromPiece = board[fromRow][fromCol];
+        const originalToPiece = board[toRow][toCol];
+
+        // Simulate the move
+        board[toRow][toCol] = board[fromRow][fromCol];
+        board[fromRow][fromCol] = null;
+
+        const kingInCheck = isKingInCheck(piece.color);
+
+        // Undo the move
+        board[fromRow][fromCol] = originalFromPiece;
+        board[toRow][toCol] = originalToPiece;
+
+        if (kingInCheck) {
+            alert('Move invalid: King would be in check');
+            return false;
+        }
+    
+    }
 
     switch (piece.type) {
         case 'pawn':
@@ -151,9 +221,8 @@ function isValidMove(fromRow, fromCol, toRow, toCol) {
             return isValidRookMove(fromRow, fromCol, toRow, toCol) || isValidBishopMove(fromRow, fromCol, toRow, toCol);
         case 'king':
             return isValidKingMove(fromRow, fromCol, toRow, toCol);
-        default:
-            return false;
     }
+    
 }
 
 // Helper functions for each piece's movement
