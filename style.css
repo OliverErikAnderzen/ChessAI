@@ -5,7 +5,6 @@ table {
     height: 400px;          /* Set a fixed height for the table */
 }
 
-
 td {
     width: 50px;            /* Fixed width for each cell */
     height: 50px;           /* Fixed height for each cell */

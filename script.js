@@ -10,6 +10,7 @@ let board = [
 ];
 
 let selectedCell = null;
+let currentTurn = 'white';
 let lastMove = null;
 let whiteKingMoved = false;
 let blackKingMoved = false;
@@ -52,13 +53,22 @@ function handleClick(cell) {
         const fromCol = parseInt(selectedCell.dataset.col);
         if (isValidMove(fromRow, fromCol, row, col)) {
             movePiece(selectedCell, cell, row, col);
+            switchTurn(); // Switch turn after a valid move
         }
         selectedCell.classList.remove('selected');
         selectedCell = null;
     } else if (cell.querySelector('img')) {
-        selectedCell = cell;
-        cell.classList.add('selected');
+        const piece = board[row][col];
+        if (piece && piece.color === currentTurn) { // Only allow selecting pieces of the current turn
+            selectedCell = cell;
+            cell.classList.add('selected');
+        }
     }
+}
+
+function switchTurn() {
+    currentTurn = currentTurn === 'white' ? 'black' : 'white';
+    document.getElementById('turnIndicator').innerText = `Current Turn: ${currentTurn.charAt(0).toUpperCase() + currentTurn.slice(1)}`;
 }
 
 function movePiece(fromCell, toCell, row, col) {
@@ -102,6 +112,7 @@ function movePiece(fromCell, toCell, row, col) {
             if (fromCol === 7) blackRookMoved.kingside = true;
         }
     }
+
 }
 
 function handleCastling(fromRow, fromCol, toCol) {
@@ -151,6 +162,7 @@ function isValidPawnMove(fromRow, fromCol, toRow, toCol, color) {
     const direction = color === 'white' ? -1 : 1;
     const startRow = color === 'white' ? 6 : 1;
 
+    // Normal move
     if (fromCol === toCol && !board[toRow][toCol]) {
         if (toRow - fromRow === direction) return true;
         if (fromRow === startRow && toRow - fromRow === 2 * direction && !board[fromRow + direction][toCol]) {
@@ -159,8 +171,18 @@ function isValidPawnMove(fromRow, fromCol, toRow, toCol, color) {
     }
 
     // Capture move
-    if (Math.abs(fromCol - toCol) === 1 && toRow - fromRow === direction && board[toRow][toCol]) {
-        return board[toRow][toCol].color !== color;
+    if (Math.abs(fromCol - toCol) === 1 && toRow - fromRow === direction) {
+        // Regular capture
+        if (board[toRow][toCol] && board[toRow][toCol].color !== color) {
+            return true;
+        }
+        // En passant
+        if (lastMove && lastMove.piece.type === 'pawn' &&
+            Math.abs(lastMove.toRow - lastMove.fromRow) === 2 &&
+            lastMove.toRow === fromRow &&
+            lastMove.toCol === toCol) {
+            return true;
+        }
     }
 
     return false;
