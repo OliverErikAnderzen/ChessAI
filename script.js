@@ -10,6 +10,7 @@ let board = [
 ];
 
 let selectedCell = null;
+let gameOver = false;
 let currentTurn = 'white';
 let lastMove = null;
 let whiteKingMoved = false;
@@ -45,6 +46,10 @@ function createBoard() {
 }
 
 function handleClick(cell) {
+    if (gameOver) {
+        alert('Game over. Start a new game to play again.');
+        return;
+    }
     const row = parseInt(cell.dataset.row);
     const col = parseInt(cell.dataset.col);
 
@@ -53,9 +58,15 @@ function handleClick(cell) {
         const fromCol = parseInt(selectedCell.dataset.col);
         if (isValidMove(fromRow, fromCol, row, col)) {
             movePiece(selectedCell, cell, row, col);
+            // Check for checkmate after the move
+            const opponentColor = currentTurn === 'white' ? 'black' : 'white';
+            if (isKingInCheck(opponentColor) && isCheckmate(opponentColor)) {
+                alert(`${opponentColor.charAt(0).toUpperCase() + opponentColor.slice(1)} is in checkmate! Game over.`);
+                gameOver = true;
+            }
             switchTurn();
         } else if (isKingInCheck(currentTurn)) {
-            alert('Invalid move: King cannot be left in check.');
+            console.log('Invalid move: King cannot be left in check.');
         }
         selectedCell.classList.remove('selected');
         selectedCell = null;
@@ -67,6 +78,8 @@ function handleClick(cell) {
         }
     }
 }
+
+
 
 function switchTurn() {
     currentTurn = currentTurn === 'white' ? 'black' : 'white';
@@ -114,12 +127,6 @@ function movePiece(fromCell, toCell, row, col) {
             if (fromCol === 7) blackRookMoved.kingside = true;
         }
     }
-
-    if (isKingInCheck(currentTurn)) {
-        alert(`${currentTurn.charAt(0).toUpperCase() + currentTurn.slice(1)} king is in check!`);
-    }
-
-
 }
 
 function handleCastling(fromRow, fromCol, toCol) {
@@ -151,6 +158,8 @@ function isKingInCheck(color) {
         }
     }
 
+    console.log(kingPosition)
+
     if (!kingPosition) {
         console.error(`${color} king not found!`);
         return false;
@@ -158,6 +167,37 @@ function isKingInCheck(color) {
 
     // Check if the king's position is under attack
     return isSquareUnderAttack(kingPosition.row, kingPosition.col, color);
+}
+
+// Iterate through all pieces of the given color
+function isCheckmate(color) {
+    console.log(`Checking for checkmate for ${color}`);
+    if (!isKingInCheck(color)) {
+        console.log(`King of ${color} is not in check. No checkmate.`);
+        return false; // Not in check, so no checkmate
+    }
+
+    // Iterate through all pieces of the given color
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            const piece = board[i][j];
+            if (piece && piece.color === color) {
+                console.log(`Checking moves for piece ${piece.type} at ${i}, ${j}`);
+                // Check all possible moves for this piece
+                for (let toRow = 0; toRow < 8; toRow++) {
+                    for (let toCol = 0; toCol < 8; toCol++) {
+                        if (isValidMove(i, j, toRow, toCol)) {
+                            console.log(`Found a valid move for ${piece.type} from ${i}, ${j} to ${toRow}, ${toCol}`);
+                            return false; // Found a valid move, so no checkmate
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    console.log(`Checkmate detected for ${color}`);
+    return true; // No valid moves and in check, so checkmate
 }
 
 function isSquareUnderAttack(row, col, defenderColor) {
@@ -202,7 +242,7 @@ function isValidMove(fromRow, fromCol, toRow, toCol, skipCheckValidation = false
         board[toRow][toCol] = originalToPiece;
 
         if (kingInCheck) {
-            alert('Move invalid: King would be in check');
+            console.log('Move invalid: King would be in check');
             return false;
         }
     
