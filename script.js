@@ -316,8 +316,44 @@ function isValidKnightMove(fromRow, fromCol, toRow, toCol) {
 function isValidKingMove(fromRow, fromCol, toRow, toCol) {
     const rowDiff = Math.abs(toRow - fromRow);
     const colDiff = Math.abs(toCol - fromCol);
-    return rowDiff <= 1 && colDiff <= 1;
+
+    // Normal king move (one square in any direction)
+    if (rowDiff <= 1 && colDiff <= 1) {
+        return true;
+    }
+
+    // Castling logic
+    if (rowDiff === 0 && colDiff === 2) { // Castling happens when the king moves 2 squares
+        if (currentTurn === 'white' && !whiteKingMoved) {
+            if (toCol === 6 && !whiteRookMoved.kingside && isPathClear(fromRow, fromCol, fromRow, 7)) {
+                // Kingside castling for white
+                return !isSquareUnderAttack(fromRow, 4, 'white') &&
+                       !isSquareUnderAttack(fromRow, 5, 'white') &&
+                       !isSquareUnderAttack(fromRow, 6, 'white');
+            } else if (toCol === 2 && !whiteRookMoved.queenside && isPathClear(fromRow, fromCol, fromRow, 0)) {
+                // Queenside castling for white
+                return !isSquareUnderAttack(fromRow, 4, 'white') &&
+                       !isSquareUnderAttack(fromRow, 3, 'white') &&
+                       !isSquareUnderAttack(fromRow, 2, 'white');
+            }
+        } else if (currentTurn === 'black' && !blackKingMoved) {
+            if (toCol === 6 && !blackRookMoved.kingside && isPathClear(fromRow, fromCol, fromRow, 7)) {
+                // Kingside castling for black
+                return !isSquareUnderAttack(fromRow, 4, 'black') &&
+                       !isSquareUnderAttack(fromRow, 5, 'black') &&
+                       !isSquareUnderAttack(fromRow, 6, 'black');
+            } else if (toCol === 2 && !blackRookMoved.queenside && isPathClear(fromRow, fromCol, fromRow, 0)) {
+                // Queenside castling for black
+                return !isSquareUnderAttack(fromRow, 4, 'black') &&
+                       !isSquareUnderAttack(fromRow, 3, 'black') &&
+                       !isSquareUnderAttack(fromRow, 2, 'black');
+            }
+        }
+    }
+
+    return false;
 }
+
 
 // Check if the path between two positions is clear (used by rook, bishop, queen)
 function isPathClear(fromRow, fromCol, toRow, toCol) {
