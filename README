@@ -1,97 +1,156 @@
-# Chess AI
+Chess AI
 
-Welcome to the **Chess AI** project! This repository contains a web-based chess game powered by an AI capable of playing chess. The project allows users to play against the AI, observe chess rules, and enjoy a fully interactive chessboard.
+Welcome to the Chess AI project! This repository contains a web-based chess game powered by an AI capable of playing chess. The project allows users to play against the AI, observe chess rules, and enjoy a fully interactive chessboard.
 
+<<<<<<< HEAD
 ### Features
+=======
+Features
+>>>>>>> parent of 9910a9e (Implement titles and text formatting)
 
-- **Interactive Chessboard**: A visually appealing chessboard built using HTML, CSS, and JavaScript.
-- **Legal Move Enforcement**: The game enforces chess rules, including special moves like castling, en passant, and pawn promotion.
-- **Turn-Based Play**: Keeps track of turns, ensuring valid player and AI moves.
-- **Game Logic**: Includes detection for check, checkmate, and stalemate conditions.
+Interactive Chessboard: A visually appealing chessboard built using HTML, CSS, and JavaScript.
 
+<<<<<<< HEAD
 ### Getting Started
 
 #### Prerequisites
+=======
+Legal Move Enforcement: The game enforces chess rules, including special moves like castling, en passant, and pawn promotion.
+
+Turn-Based Play: Keeps track of turns, ensuring valid player and AI moves.
+
+Game Logic: Includes detection for check, checkmate, and stalemate conditions.
+
+Getting Started
+
+Prerequisites
+>>>>>>> parent of 9910a9e (Implement titles and text formatting)
 
 To run this project locally, you need:
 
-- A web browser (e.g., Chrome, Firefox, Safari, or Edge).
-- Basic knowledge of how to run HTML, CSS, and JavaScript files locally or a simple web server.
+A web browser (e.g., Chrome, Firefox, Safari, or Edge).
 
+<<<<<<< HEAD
 #### Installation
+=======
+Basic knowledge of how to run HTML, CSS, and JavaScript files locally or a simple web server.
+>>>>>>> parent of 9910a9e (Implement titles and text formatting)
 
-1. Clone this repository:
+Installation
 
-   ```bash
-   git clone https://github.com/yourusername/chess-ai.git
-   cd chess-ai
-   ```
+Clone this repository:
 
-2. Open `index.html` in your browser:
+git clone https://github.com/yourusername/chess-ai.git
+cd chess-ai
 
-   ```bash
-   Open the file in a browser to launch the chessboard.
-   ```
+Open index.html in your browser:
+
+Open the file in a browser to launch the chessboard.
 
 Alternatively, you can serve the files using a simple HTTP server:
 
-```bash
 python3 -m http.server
-```
 
-Navigate to `http://localhost:8000` in your browser.
+Navigate to http://localhost:8000 in your browser.
 
+<<<<<<< HEAD
 ### File Structure
+=======
+File Structure
+>>>>>>> parent of 9910a9e (Implement titles and text formatting)
 
-- **index.html**: The main HTML file containing the structure of the chessboard and game interface.
-- **style.css**: Styles for the chessboard and pieces.
-- **script.js**: JavaScript logic for game rules, piece movement, and AI interaction.
-- **pieces/**: Images of chess pieces used for visualization.
+index.html: The main HTML file containing the structure of the chessboard and game interface.
 
+<<<<<<< HEAD
 ### How to Play
+=======
+style.css: Styles for the chessboard and pieces.
+>>>>>>> parent of 9910a9e (Implement titles and text formatting)
 
-1. Open the game in your browser.
-2. The game starts with **White's turn**.
-3. Click on a piece to select it, and then click on a valid destination to move.
-4. The AI will play its move after you make yours.
-5. Play continues until checkmate, stalemate, or resignation.
+script.js: JavaScript logic for game rules, piece movement, and AI interaction.
 
+<<<<<<< HEAD
 ### Development
 
 #### Key Functionalities
+=======
+pieces/: Images of chess pieces used for visualization.
 
-- **Game Initialization**: The chessboard is dynamically generated using JavaScript.
-- **Turn Switching**: Alternates between White and Black turns.
-- **Move Validation**: Implements move rules for all chess pieces.
-- **Check and Checkmate**: Validates check and checkmate conditions after every move.
+How to Play
+>>>>>>> parent of 9910a9e (Implement titles and text formatting)
 
+Open the game in your browser.
+
+<<<<<<< HEAD
 #### Extending the AI
+=======
+The game starts with White's turn.
+
+Click on a piece to select it, and then click on a valid destination to move.
+
+The AI will play its move after you make yours.
+
+Play continues until checkmate, stalemate, or resignation.
+
+Development
+
+Key Functionalities
+
+Game Initialization: The chessboard is dynamically generated using JavaScript.
+
+Turn Switching: Alternates between White and Black turns.
+
+Move Validation: Implements move rules for all chess pieces.
+
+Check and Checkmate: Validates check and checkmate conditions after every move.
+
+Extending the AI
+>>>>>>> parent of 9910a9e (Implement titles and text formatting)
 
 To improve or customize the AI:
 
-1. Enhance the move evaluation logic in `script.js`.
-2. Add a scoring system to rank moves based on board position.
-3. Integrate an advanced chess engine, such as Stockfish, for more sophisticated play.
+Enhance the move evaluation logic in script.js.
 
+<<<<<<< HEAD
 ### Contributing
+=======
+Add a scoring system to rank moves based on board position.
+
+Integrate an advanced chess engine, such as Stockfish, for more sophisticated play.
+
+Contributing
+>>>>>>> parent of 9910a9e (Implement titles and text formatting)
 
 We welcome contributions! If you'd like to help, please:
 
-- Fork the repository.
-- Create a feature branch (`git checkout -b feature-name`).
-- Commit your changes (`git commit -m 'Add feature'`).
-- Push to the branch (`git push origin feature-name`).
-- Open a pull request.
+Fork the repository.
 
+<<<<<<< HEAD
 ### License
+=======
+Create a feature branch (git checkout -b feature-name).
+>>>>>>> parent of 9910a9e (Implement titles and text formatting)
 
-This project is licensed under the **MIT License**. See the `LICENSE` file for details.
+Commit your changes (git commit -m 'Add feature').
 
+<<<<<<< HEAD
 ### Acknowledgments
+=======
+Push to the branch (git push origin feature-name).
+>>>>>>> parent of 9910a9e (Implement titles and text formatting)
 
-- Chess rules and mechanics inspired by classical chess.
-- Icons and visuals made possible with chess piece images.
-- OpenAI for providing resources to implement game logic and AI strategies.
+Open a pull request.
 
-Enjoy playing **Chess AI** and improve your skills!
+License
 
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Acknowledgments
+
+Chess rules and mechanics inspired by classical chess.
+
+Icons and visuals made possible with chess piece images.
+
+OpenAI for providing resources to implement game logic and AI strategies.
+
+Enjoy playing Chess AI and improve your skills!
