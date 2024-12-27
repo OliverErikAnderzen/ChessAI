@@ -374,4 +374,35 @@ function isPathClear(fromRow, fromCol, toRow, toCol) {
     return true;
 }
 
+function getValidMoves(board, playerColor) {
+    const moves = [];
+
+    board.forEach((row, fromRow) => {
+        row.forEach((piece, fromCol) => {
+            if (piece && piece.color === playerColor) {
+                for (let toRow = 0; toRow < 8; toRow++) {
+                    for (let toCol = 0; toCol < 8; toCol++) {
+                        if (isValidMove(fromRow, fromCol, toRow, toCol)) {
+                            moves.push({
+                                from: { row: fromRow, col: fromCol },
+                                to: { row: toRow, col: toCol }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    return moves;
+}
+
+function getRandomMove(board, playerColor) {
+    const validMoves = getValidMoves(board, playerColor);
+    if (validMoves.length === 0) return null; // No moves available
+    const randomIndex = Math.floor(Math.random() * validMoves.length);
+    return validMoves[randomIndex];
+}
+
+
 createBoard();
