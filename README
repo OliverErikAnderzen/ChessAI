@@ -2,23 +2,23 @@
 
 Welcome to the **Chess AI** project! This repository contains a web-based chess game powered by an AI capable of playing chess. The project allows users to play against the AI, observe chess rules, and enjoy a fully interactive chessboard.
 
-## Features
+### Features
 
 - **Interactive Chessboard**: A visually appealing chessboard built using HTML, CSS, and JavaScript.
 - **Legal Move Enforcement**: The game enforces chess rules, including special moves like castling, en passant, and pawn promotion.
 - **Turn-Based Play**: Keeps track of turns, ensuring valid player and AI moves.
 - **Game Logic**: Includes detection for check, checkmate, and stalemate conditions.
 
-## Getting Started
+### Getting Started
 
-### Prerequisites
+#### Prerequisites
 
 To run this project locally, you need:
 
 - A web browser (e.g., Chrome, Firefox, Safari, or Edge).
 - Basic knowledge of how to run HTML, CSS, and JavaScript files locally or a simple web server.
 
-### Installation
+#### Installation
 
 1. Clone this repository:
 
@@ -41,14 +41,14 @@ python3 -m http.server
 
 Navigate to `http://localhost:8000` in your browser.
 
-## File Structure
+### File Structure
 
 - **index.html**: The main HTML file containing the structure of the chessboard and game interface.
 - **style.css**: Styles for the chessboard and pieces.
 - **script.js**: JavaScript logic for game rules, piece movement, and AI interaction.
 - **pieces/**: Images of chess pieces used for visualization.
 
-## How to Play
+### How to Play
 
 1. Open the game in your browser.
 2. The game starts with **White's turn**.
@@ -56,16 +56,16 @@ Navigate to `http://localhost:8000` in your browser.
 4. The AI will play its move after you make yours.
 5. Play continues until checkmate, stalemate, or resignation.
 
-## Development
+### Development
 
-### Key Functionalities
+#### Key Functionalities
 
 - **Game Initialization**: The chessboard is dynamically generated using JavaScript.
 - **Turn Switching**: Alternates between White and Black turns.
 - **Move Validation**: Implements move rules for all chess pieces.
 - **Check and Checkmate**: Validates check and checkmate conditions after every move.
 
-### Extending the AI
+#### Extending the AI
 
 To improve or customize the AI:
 
@@ -73,7 +73,7 @@ To improve or customize the AI:
 2. Add a scoring system to rank moves based on board position.
 3. Integrate an advanced chess engine, such as Stockfish, for more sophisticated play.
 
-## Contributing
+### Contributing
 
 We welcome contributions! If you'd like to help, please:
 
@@ -83,11 +83,11 @@ We welcome contributions! If you'd like to help, please:
 - Push to the branch (`git push origin feature-name`).
 - Open a pull request.
 
-## License
+### License
 
 This project is licensed under the **MIT License**. See the `LICENSE` file for details.
 
-## Acknowledgments
+### Acknowledgments
 
 - Chess rules and mechanics inspired by classical chess.
 - Icons and visuals made possible with chess piece images.
